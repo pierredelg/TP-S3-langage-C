@@ -83,19 +83,12 @@ int mon_strncmp(const char * s1, const char * s2, int n){
 	return resultat;
 }
 char *mon_strcat(char *s1,const char *s2){
-	//&s1 adresse pointeur
-	//s1= adresse var char
-	//*s1= var char
-
+	
 	while(*s1 != '\0'){
-		printf("%c",*s1);
 		s1 ++;
 	}
 
 	while(*s2 != '\0'){
-		printf("%c",*s1);
-		printf("%c",*s2);
-
 		*s1 = *s2;
 		s1++;
 		s2++;
@@ -168,11 +161,11 @@ int main(){
 
 	printf("\nExercice 2:\nLa longueur du tableau (version pointeur) est %d\n",mon_strlen2(mot2));
 
-	char *mot3 = "bonjour\0     ";
+	printf("\nExercice 3:\nLe resultat de la comparaison est %d\n",mon_strcmp(mot,mot2));
 
-	printf("\nExercice 3:\nLe resultat de la comparaison est %d\n",mon_strcmp(mot2,mot3));
+	printf("\nExercice 4:\nLe resultat de la comparaison jusqu'au caractere %d est %d\n",3,mon_strncmp(mot,mot2,3));
 
-	printf("\nExercice 4:\nLe resultat de la comparaison jusqu'au caractere %d est %d\n",3,mon_strncmp(mot2,mot3,3));
+	//char mot3 [100] = {"bonjour"};
 
 	char *mot4 = "toi";
 
