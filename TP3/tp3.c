@@ -139,7 +139,7 @@ char *mon_strstr(char *haystack, char *needle){
 					compteur --;
 					haystack --;
 				}
-			
+				
 				s = haystack;
 				return s;
 			}
@@ -161,7 +161,7 @@ char *mon_strstr2(char *haystack, char *needle){
 			haystack++;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -193,9 +193,9 @@ int main(){
 	
 	printf("\nExercice 6:\n%s\n",mon_strchr(mot4,'o'));
 
-	printf("\nExercice 7:\n%s\n",mon_strstr("boudqNCDS,KloorccSOCDoonbovhuofun","on"));
+	printf("\nExercice 7:\n%s\n",mon_strstr("ludovic","ov"));
 
-	printf("\nExercice 8:\n%s\n",mon_strstr2("boudqNCDS,KloorccSOCDoonbovhuofun","on"));
+	printf("\nExercice 8:\n%s\n",mon_strstr2("boudqNCDSKloorccSOCDoonbovhuofun","on"));
 
 	return 0;
 }
