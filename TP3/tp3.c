@@ -84,7 +84,7 @@ int mon_strncmp(const char * s1, const char * s2, int n){
 }
 char *mon_strcat(char *s1,const char *s2){
 	
-	while(*s1 != '\0'){
+	while(*s1 != '\0'){   // for(;*s1;s1++) {}
 		s1 ++;
 	}
 
@@ -94,7 +94,7 @@ char *mon_strcat(char *s1,const char *s2){
 		s2++;
 	}
 
-	s1 = '\0';
+	*s1 = '\0';
 
 	return s1;
 }
@@ -118,7 +118,7 @@ char *mon_strstr(char *haystack, char *needle){
 	char *s = NULL;
 	int compteur = 0;
 
-	//On parcours le mot reference
+	//On parcours la chaine reference
 	while(*haystack){
 
 		//si la lettre correspond au debut de la deuxieme chaine
@@ -150,6 +150,22 @@ char *mon_strstr(char *haystack, char *needle){
 	return s;
 }
 
+char *mon_strstr2(char *haystack, char *needle){
+	
+	while(*haystack){
+
+		if(mon_strcmp(haystack, needle) == 0){
+			return haystack;	
+		}
+		else{
+			haystack++;
+		}
+	}
+	
+	return NULL;
+}
+
+
 
 int main(){
 
@@ -165,15 +181,21 @@ int main(){
 
 	printf("\nExercice 4:\nLe resultat de la comparaison jusqu'au caractere %d est %d\n",3,mon_strncmp(mot,mot2,3));
 
-	//char mot3 [100] = {"bonjour"};
+	char mot3 [20] = {"bonjour"};
 
 	char *mot4 = "toi";
 
-	//printf("\nExercice 5:\nLe resultat de la concatenation de %s et de %s est %s\n",mot3,mot4,mon_strcat(mot3,mot4));
+	printf("\nExercice 5:\nLe resultat de la concatenation de %s et de %s ",mot3,mot4);
+
+	mon_strcat(mot3,mot4);
+
+	printf("est %s\n",mot3);
 	
 	printf("\nExercice 6:\n%s\n",mon_strchr(mot4,'o'));
 
 	printf("\nExercice 7:\n%s\n",mon_strstr("boudqNCDS,KloorccSOCDoonbovhuofun","on"));
+
+	printf("\nExercice 8:\n%s\n",mon_strstr2("boudqNCDS,KloorccSOCDoonbovhuofun","on"));
 
 	return 0;
 }

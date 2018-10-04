@@ -5,3 +5,4 @@ int mon_strncmp(const char * s1, const char * s2, int n);
 char *mon_strcat(char *s1, const char *s2);
 char *mon_strchr(char *s, int c);
 char *mon_strstr(char *haystack, char *needle);
+char *mon_strstr2(char *haystack, char *needle);
