@@ -31,10 +31,10 @@ int mon_strcmp(const char * s1, const char * s2){
 			s2++;
 		}
 		else{
-			return *s1 - *s2;
+			return *s1-*s2;
 		}
 	}
-	return 0;
+	return *s1-*s2;
 }
 
 int mon_strncmp(const char * s1, const char * s2, int n){
@@ -73,51 +73,38 @@ char *mon_strcat(char *s1,const char *s2){
 
 char *mon_strchr(char *s, int c){
 
-	char *s1 = NULL;
-
 	while(*s != '\0'){
 		if(*s == c){
-			s1 = s;
-			return s1;
+			return s;
 		}
 		s++;
 	}
-	return s1;
+	return NULL;
 }
 
 char *mon_strstr(char *haystack, char *needle){
 
-	char *s = NULL;
 	int compteur = 0;
 
-	//On parcours la chaine reference
 	while(*haystack){
 
-		//si la lettre correspond au debut de la deuxieme chaine
 		if(*haystack == *needle){
 			
-			//tant que les lettres sont egales et que la deuxieme chaine n'est pas a la fin
 			while(*haystack == *needle && *needle != '\0'){
 				compteur++;
 				haystack++;
 				needle++;
 			}
-			//si la 2eme chaine est arrivée a la fin
 			if(*needle == '\0'){
-				//On remonte le pointeur a la premiere lettre trouvée
-				while(compteur != 0){  // haystack -= compteur;
-					compteur --;
-					haystack --;
-				}
 				
-				s = haystack;
-				return s;
+				haystack -= compteur;
+				return haystack;
 			}
 		}else{
 			haystack++;
 		}
 	}
-	return s;
+	return NULL;
 }
 
 char *mon_strstr2(char *haystack, char *needle){
@@ -126,13 +113,15 @@ char *mon_strstr2(char *haystack, char *needle){
 	
 	while(*haystack){
 
-		if(mon_strcmp(haystack, needle) == 0){
-			return haystack;	
+		if(*haystack == *needle){
+
+			if(mon_strncmp(haystack,needle,mon_strlen2(needle)) == 0){
+
+				return haystack;
+			}
 		}
-		else{
-			compteur++;
-			haystack++;
-		}
+		compteur++;
+		haystack++;
 	}
 	haystack -= compteur;
 	return NULL;
@@ -150,7 +139,7 @@ int main(){
 
 	printf("\nExercice 2:\nLa longueur du tableau (version pointeur) est %d\n",mon_strlen2(mot2));
 
-	printf("\nExercice 3:\nLe resultat de la comparaison est %d\n",mon_strcmp(mot,mot2));
+	printf("\nExercice 3:\nLe resultat de la comparaison est %d\n",mon_strcmp(mot,"bon"));
 
 	printf("\nExercice 3:\nLe resultat de la comparaison est %d\n",mon_strcmp("aaaaaaaaaaaaaa",mot));
 
@@ -170,7 +159,7 @@ int main(){
 
 	printf("\nExercice 7:\n%s\n",mon_strstr("pierre","er"));
 
-	printf("\nExercice 8:\n%s\n",mon_strstr2("boudqNCDSKloorccSOCDoonbovhuofun","on"));
+	printf("\nExercice 8:\n%s\n",mon_strstr2("CDoonbovhuofun","ouf"));
 
 	return 0;
 }

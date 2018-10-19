@@ -1,30 +1,28 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "tp4.h"
 
 char * miroir (const char *s){
 
-	char * resultat = malloc(sizeof(*s) * strlen(s));
 	int compteur = 0;
 
+	char * resultat = malloc(sizeof(*s) * strlen(s));
+
 	if(resultat != NULL){
-	
-		while(*s){
-	
-			*resultat = *s;
-			s++;
-			resultat++;
-			compteur++;
-		}
-	
+
+		resultat += strlen(s) - 1;
 		*resultat = '\0';
 
-		while(compteur != 0){
-			s--;
-			compteur --;
-			resultat --;
+		while(*s){
+
+			resultat--;
+			*resultat = *s;
+			s++;
+			compteur++;
 		}
+		s -= compteur;
 	}
 	return resultat;
 }
@@ -33,19 +31,16 @@ char * saisie (){
 
 	char * resultat = NULL;
 	int taille = 1;
-	int compteur = 0;
-	char c = ' ';
+	char c = '*';
+	//int compteur = 0;
+	resultat = malloc(sizeof(*resultat) * taille);
 	
-	do{
-		resultat = malloc(sizeof(*resultat) * taille);
+	while(isspace(c) == 0 || c == '\n'){
+		resultat = realloc(resultat,sizeof(*resultat) * taille);
 		c = getchar();
 		*resultat = c;
 		taille++;
-		resultat++;
-		compteur ++;
-	}while(c != EOF);
-
-	resultat -= compteur;
+	}
 	return resultat;
 }
 
