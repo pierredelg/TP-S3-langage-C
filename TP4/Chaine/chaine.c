@@ -35,9 +35,9 @@ char * saisie (){
 
 	char c = 'a';
 
-	resultat = malloc(sizeof(c) * 1);
+	resultat = malloc(10);
 	
-	while(isspace(c) == 0 && c != EOF && c != '\n'){
+	while(isspace(c) == 0 && c != EOF){
 		c = getchar();
 
 		if(isspace(c) == 0){
@@ -78,14 +78,15 @@ int main(int argc, char *argv[]){
 				printf("%s\n",saisie());
 				return 0;
 			}
-			if(bmirroir == 1 && argc == 3 && bscan == 0){
-				printf("%s\n",miroir(argv[2]));
-				return 0;
-			}
-			if(bmirroir == 1 && bscan == 1 && argc == 2){
+			if(bscan == 1 && argc == 2 && bmirroir == 1){
 				printf("%s\n",miroir(saisie()));
 				return 0;
 			}
+			if(bscan == 0 && argc == 3 && bmirroir == 1){
+				printf("%s\n",miroir(argv[2]));
+				return 0;
+			}
+			
 		}
 	}
 	
