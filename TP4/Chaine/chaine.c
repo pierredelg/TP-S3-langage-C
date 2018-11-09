@@ -10,20 +10,21 @@ char * miroir (const char *s){
 
 	char * resultat = malloc(sizeof(*s) * strlen(s));
 
-	if(resultat != NULL){
-
-		resultat += strlen(s) - 1;
-		*resultat = '\0';
-
-		while(*s){
-
-			resultat--;
-			*resultat = *s;
-			s++;
-			compteur++;
-		}
-		s -= compteur;
+	if(resultat == NULL){
+		return 0;
 	}
+	resultat += strlen(s);
+	*resultat = '\0';
+
+	while(*s){
+
+		resultat--;
+		*resultat = *s;
+		s++;
+		compteur++;
+	}
+	s -= compteur;
+	
 	return resultat;
 }
 
@@ -33,23 +34,45 @@ char * saisie (){
 
 	int taille = 0;
 
+	int tailleBuffer = 50;
+
 	char c = 'a';
 
-	resultat = malloc(10);
-	
-	while(isspace(c) == 0 && c != EOF){
+	resultat = malloc(tailleBuffer);
+
+	if(resultat == NULL){
+		return 0;
+	}
+
+	while(isspace(c) == 0 && c != EOF ){
 		c = getchar();
 
 		if(isspace(c) == 0){
 
-			resultat += taille;
-			*resultat = c;
-			resultat -= taille;
+			*resultat++ = c;
 			taille++;
-			resultat = realloc(resultat,sizeof(c) * taille);
 		}
-		
+
+		if(taille == tailleBuffer){
+			
+			resultat -= taille;
+			tailleBuffer += 50;
+			resultat = realloc(resultat,tailleBuffer);
+
+			if(resultat == NULL){
+				return 0;
+			}
+		}
 	}
+	*resultat = '\0';
+	if(taille < tailleBuffer){
+		resultat -= taille;
+		resultat = realloc(resultat,(taille + 1));
+	}
+	else{
+		resultat -= taille; 
+	}
+	
 	return resultat;
 }
 
