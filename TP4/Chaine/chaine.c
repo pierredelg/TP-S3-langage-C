@@ -64,7 +64,9 @@ char * saisie (){
 			}
 		}
 	}
+	
 	*resultat = '\0';
+
 	if(taille < tailleBuffer){
 		resultat -= taille;
 		resultat = realloc(resultat,(taille + 1));
