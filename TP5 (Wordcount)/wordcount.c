@@ -6,6 +6,57 @@
 #include <unistd.h>
 #include <ctype.h>
 
+char * saisie (){
+
+	char * resultat = NULL;
+
+	int taille = 0;
+
+	int tailleBuffer = 50;
+
+	char c = 'a';
+
+	resultat = malloc(tailleBuffer);
+
+	if(resultat == NULL){
+		return 0;
+	}
+
+	while(c != EOF && c != '\n'){
+		c = getchar();
+
+		if(isspace(c) == 0){
+
+			*resultat = c;
+			resultat++;
+			taille++;
+		}
+
+		if(taille == tailleBuffer){
+			
+			resultat -= taille;
+			tailleBuffer += 50;
+			resultat = realloc(resultat,tailleBuffer);
+
+			if(resultat == NULL){
+				return 0;
+			}
+		}
+	}
+	
+	*resultat = '\0';
+
+	if(taille < tailleBuffer){
+		resultat -= taille;
+		resultat = realloc(resultat,(taille + 1));
+	}
+	else{
+		resultat -= taille; 
+	}
+	
+	return resultat;
+}
+
 
 int traiter (int f, int *car, int *mot, int *lig){
 
@@ -25,9 +76,9 @@ int traiter (int f, int *car, int *mot, int *lig){
 			while(i < lecture){
 
 				if(isspace(buffer[i])){
-					*mot = *mot + 1;
+					*mot= *mot + 1;
 					if(buffer[i] == '\n'){
-						*lig = *lig + 1;
+						*lig= *lig + 1;
 					}
 				}
 				i++;
@@ -39,8 +90,8 @@ int traiter (int f, int *car, int *mot, int *lig){
 	*car -= *lig;
 
 	//On rajoute 1 a ligne et a mot car le dernier char n'est pas \n mais EOF
-	*mot += 1;
-	*lig += 1;
+	*mot= *mot + 1;
+	*lig= *lig +1;
 
 	return 0;
 }
@@ -142,6 +193,34 @@ int main(int argc, char *argv[]){
 		}
 
 		printf(" -> total");
+		printf("\n");
+	}
+
+	if(argc == 1){
+		
+		char* s = saisie();
+
+		while(*s){
+			nbChar++;
+			printf("%c\n",*s);
+
+			//probleme!!!! la fonction saisie() ne donne pas les espaces
+
+			if(isspace(*s)){
+
+				nbMot++;
+			
+				if(*s == '\n'){
+					nbLigne++;
+				}
+			}
+			s++;
+		}
+
+		printf("caracteres : %d ",nbChar);
+		printf("mots : %d ",nbMot);
+		printf("lignes : %d ",nbLigne);
+		printf(" -> stdin");
 		printf("\n");
 	}	
 }
