@@ -195,19 +195,24 @@ int main(int argc, char *argv[]){
 		printf(" -> total");
 		printf("\n");
 	}
+
 	if(argc == 1){
 		
 		char* s = saisie();
 
 		while(*s){
 			nbChar++;
+			printf("%c\n",*s);
 
-			if(*s == ' '){
+			//probleme!!!! la fonction saisie() ne donne pas les espaces
+
+			if(isspace(*s)){
 
 				nbMot++;
-			}
-			if(*s == '\n'){
-				nbLigne++;
+			
+				if(*s == '\n'){
+					nbLigne++;
+				}
 			}
 			s++;
 		}

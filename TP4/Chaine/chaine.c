@@ -68,12 +68,12 @@ char * saisie (){
 	}
 	
 	*resultat = '\0';
+	resultat -= taille;
 
 	if(taille < tailleBuffer){
-		resultat = realloc(resultat,(taille + 1));
+		
+		resultat = realloc(resultat,(taille));
 	}
-	
-	resultat -= taille; 
 	
 	return resultat;
 }
@@ -102,22 +102,28 @@ int main(int argc, char *argv[]){
 				if(argv[i][j] == 'm'){
 					bmirroir = 1;
 				}
-				else{
-					if(argv[i][j] == 's'){
-						bscan = 1;
-					}
-					else{
-						printf("mauvaise utilisation\n");
-						return 0;
-					}
+				if(argv[i][j] == 's'){
+					bscan = 1;
 				}
 				j++;
 			}
 		}
+		else{
+			if( (i+1) != argc){
+				
+				printf("mauvaise utilisation\n");
+				return 0;
+			}
+		}
 	}
 	
-	if (argv[argc - 1][1] != '-') {
+	if (argv[argc - 1][0] == '-') {
 		if (! bscan) {
+			printf("mauvaise utilisation\n");
+			return 0;
+		}
+	}else{
+		if(bscan){
 			printf("mauvaise utilisation\n");
 			return 0;
 		}
@@ -126,12 +132,10 @@ int main(int argc, char *argv[]){
 	char * mot = NULL;
 
 	if(bscan == 1){
-
 		mot = saisie();
 	}
 	else {
-
-		mot = argv[argc];
+		mot = argv[argc-1];
 	}
 
 	if(bmirroir == 1){
