@@ -8,7 +8,7 @@ char * miroir (const char *s){
 
 	int compteur = 0;
 
-	char * resultat = malloc(sizeof(*s) * strlen(s));
+	char * resultat = malloc(strlen(s)+1);
 
 	if(resultat == NULL){
 		return 0;
@@ -49,7 +49,8 @@ char * saisie (){
 
 		if(isspace(c) == 0){
 
-			*resultat++ = c;
+			*resultat = c;
+			resultat++;
 			taille++;
 		}
 
@@ -58,22 +59,21 @@ char * saisie (){
 			resultat -= taille;
 			tailleBuffer += 50;
 			resultat = realloc(resultat,tailleBuffer);
-
+			
 			if(resultat == NULL){
 				return 0;
 			}
+			resultat += taille;
 		}
 	}
 	
 	*resultat = '\0';
 
 	if(taille < tailleBuffer){
-		resultat -= taille;
 		resultat = realloc(resultat,(taille + 1));
 	}
-	else{
-		resultat -= taille; 
-	}
+	
+	resultat -= taille; 
 	
 	return resultat;
 }
@@ -81,41 +81,65 @@ char * saisie (){
 int main(int argc, char *argv[]){
 
 	int i = 1;
+	int j = 0;
 	int bmirroir = 0;
 	int bscan = 0;
 
-	if(argc == 2 || argc == 3){
-		
-		if(argv[1][0] == '-'){
-			
-			while(argv[1][i]){
+	if(argc == 1){
+		printf("mauvaise utilisation\n");
+		return 0;
+	}
 
-				if(argv[1][i] == 'm'){
+	for(i = 1 ; i < argc ; i++){
+
+		j = 0;
+
+		if(argv[i][j] == '-'){
+
+			while(argv[i][j]){
+				j++;
+
+				if(argv[i][j] == 'm'){
 					bmirroir = 1;
 				}
-				if(argv[1][i] == 's'){
-					bscan = 1;
+				else{
+					if(argv[i][j] == 's'){
+						bscan = 1;
+					}
+					else{
+						printf("mauvaise utilisation\n");
+						return 0;
+					}
 				}
-				i++;
+				j++;
 			}
-
-			if(bscan == 1 && argc == 2 && bmirroir == 0){
-				printf("%s\n",saisie());
-				return 0;
-			}
-			if(bscan == 1 && argc == 2 && bmirroir == 1){
-				printf("%s\n",miroir(saisie()));
-				return 0;
-			}
-			if(bscan == 0 && argc == 3 && bmirroir == 1){
-				printf("%s\n",miroir(argv[2]));
-				return 0;
-			}
-			
 		}
 	}
 	
-	printf("mauvaise utilisation\n");
-	
+	if (argv[argc - 1][1] != '-') {
+		if (! bscan) {
+			printf("mauvaise utilisation\n");
+			return 0;
+		}
+	}
+
+	char * mot = NULL;
+
+	if(bscan == 1){
+
+		mot = saisie();
+	}
+	else {
+
+		mot = argv[argc];
+	}
+
+	if(bmirroir == 1){
+		printf("%s\n",miroir(mot));
+	}
+	else{
+		printf("%s\n",mot);
+	}
+			
 	return 0;
 }
