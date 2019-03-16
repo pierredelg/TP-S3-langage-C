@@ -6,18 +6,19 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+//TP: Implémenter la commande 'ls' avec les options possibles: -a, -l, -d
+
 int main(){
 
 	struct stat * buf;
-
 	buf = malloc(sizeof(struct stat));
 
 	if(buf != NULL){
 
 		stat("Bureau",buf);
-		printf("%ld\n",buf-> st_dev);
+		printf("%ld\n",buf -> st_dev);
 
-		if(S_ISDIR(buf->st_mode)){
+		if(S_ISDIR(buf -> st_mode)){
 
 			DIR * rep = opendir("Bureau");
 			
@@ -27,14 +28,12 @@ int main(){
 			
 				while(ent != NULL){
 
-					printf("%s\n",ent->d_name);
+					printf("%s\n",ent -> d_name);
 					ent = readdir(rep);
 				}
-			
 				closedir(rep);
 			}
 		}
 	}
-
 	return 0;
 }
